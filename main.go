@@ -12,7 +12,6 @@ var messages []string
 func main() {
 	// TODO: Make input file to be read from os.Args
 	messages := utility.ReadInput(inputFile)
-	fmt.Println(messages)
 	kingdomMsgMap := utility.SplitMessages(messages)
 	allies := utility.ProcessMessages(kingdomMsgMap)
 	if len(allies) < 3 {

@@ -23,9 +23,8 @@ func ReadInput(filename string) []string {
 	}
 
 	err = scanner.Err()
-	if err == nil {
-		fmt.Println("Scan completed and reached EOF")
-	} else {
+	//fmt.Println("Scan completed and reached EOF")
+	if err != nil {
 		fmt.Println(err)
 		return []string{}
 	}
@@ -58,7 +57,6 @@ func ProcessMessages(inp map[string]string) []string {
 }
 
 func checkAllegiance(msg string, emblem string) bool {
-	fmt.Println(emblem)
 	emblemCharCount := make(map[int]int)
 	actualCharCount := make(map[int]int)
 	for _, c := range emblem {
@@ -140,9 +138,6 @@ func cipherFunc(asciiInt int, key int) int {
 	if diff < 97 && unicode.IsLower(rune(asciiInt)) {
 		rotation := 96 - (diff) // Since 97 is counted
 		return 122 - rotation
-	}
-	if(asciiInt == 65) {
-		fmt.Println("Cipher func tells : " + string(diff))
 	}
 	return diff
 }
