@@ -120,7 +120,7 @@ func decryptMessage(msg string, key int) string {
 	b.Grow(len(msg))
 	for _, val := range msg {
 		asciiVal := int(val)
-		decodedAscii := cipherFunc(asciiVal, key)
+		decodedAscii := decipherFunc(asciiVal, key)
 		fmt.Fprintf(&b, "%c", rune(decodedAscii))
 	}
 	s := b.String()
@@ -128,7 +128,10 @@ func decryptMessage(msg string, key int) string {
 	return s
 }
 
-func cipherFunc(asciiInt int, key int) int {
+func decipherFunc(asciiInt int, key int) int {
+	if key > 26 {
+		key = key % 26
+	}
 	// A - Z : 65-90 && a - z : 97 - 122
 	diff := asciiInt - key
 	if diff < 65 && !unicode.IsLower(rune(asciiInt)) {

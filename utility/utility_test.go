@@ -55,23 +55,49 @@ func TestComparator(t *testing.T) {
 	}
 }
 
-//TODO: Implement it better
 func TestDecryptMessage(t *testing.T) {
-	var dataItems = map[string]string{
-		"ROZO": "OLWL",
+	var testCases = []struct{
+		Inp	string
+		Key int
+		Decoded string
+	}{
+		{"ROZO", 3, "OLWL"},
 	}
-	var msgToKeyMap = map[string]int{
-		"ROZO": 3,
-	}
-	for msg, decryptedMsg := range dataItems {
-		res := decryptMessage(msg, msgToKeyMap[msg])
-		if res != decryptedMsg {
+
+	for _, val := range testCases {
+		res := decryptMessage(val.Inp, val.Key)
+		if res != val.Decoded {
 			fmt.Println(aurora.Red("Failed"))
 			t.Fail()
-			t.Errorf("TestDecryptMessage Arguments %v and key %v : FAILED, expected %v but got %v", msg, msgToKeyMap[msg], decryptedMsg, res)
+			t.Errorf("TestDecryptMessage Arguments %v and key %v : FAILED, expected %v but got %v", val.Inp, val.Key, val.Decoded, res)
 		} else {
 			fmt.Println(aurora.Cyan("Success"))
-			t.Logf("TestDecryptMessage Arguments %v and key %v : PASSED, expected %v but got %v", msg, msgToKeyMap[msg], decryptedMsg, res)
+			t.Logf("TestDecryptMessage Arguments %v and key %v : PASSED, expected %v and got %v", val.Inp, val.Key, val.Decoded, res)
 		}
 	}
+}
+
+func TestDecipherFunc(t *testing.T) {
+	var testCases = []struct {
+		Input		int
+		CipherKey 	int
+		DecodedRes	int
+	}{
+		{70, 5, 65}, // (70) F ,key(5) => A, Ascii Val = 65
+		{82, 69, 65}, // (82) R ,key(69) => A, Ascii Val = 65
+		{119, 100, 97}, // w, key(100) => a, Ascii Val = 97
+	}
+
+	for _, val := range testCases {
+		actualRes := decipherFunc(val.Input, val.CipherKey)
+		if val.DecodedRes != actualRes {
+			fmt.Println(aurora.Red("Failed"))
+			t.Fail()
+			t.Errorf("TestDecipherFunc Arguments %v and key %v : FAILED, expected %v but got %v", val.Input, val.CipherKey, val.DecodedRes, actualRes)
+		} else {
+			fmt.Println(aurora.Cyan("Success"))
+			t.Logf("TestCipherFunc Arguments %v and key %v : PASSED, expected %v and got %v", val.Input, val.CipherKey, val.DecodedRes, actualRes)
+		}
+	}
+
 }
