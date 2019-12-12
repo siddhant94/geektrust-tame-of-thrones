@@ -18,7 +18,6 @@ func ReadInput(filename string) []string {
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines) // Tokenizes based on new line
 	for scanner.Scan() {           // Value is false when EOF or error
-		//fmt.Println(scanner.Text())
 		result = append(result, scanner.Text())
 	}
 
@@ -42,7 +41,8 @@ func SplitMessages(messages []string) map[string]string {
 	return resultMap
 }
 
-// ProcessMessages
+// ProcessMessages takes a kingdom to msg map sent by King Shan, decodes it, calls checkAllegience and returns with ally
+// kingdoms
 func ProcessMessages(inp map[string]string) []string {
 	var allyKingdoms []string
 	for kingdomName, msg := range inp {
@@ -57,12 +57,11 @@ func ProcessMessages(inp map[string]string) []string {
 }
 
 func checkAllegiance(msg string, emblem string) bool {
-	emblemCharCount := make(map[int]int)
-	actualCharCount := make(map[int]int)
+	var (
+		emblemCharCount = make(map[int]int)
+		actualCharCount = make(map[int]int)
+	)
 	for _, c := range emblem {
-		//if !strings.Contains(strings.ToUpper(msg), string(c)) {
-		//	return false
-		//}
 		if _, ok := emblemCharCount[int(c)]; ok {
 			emblemCharCount[int(c)] += 1
 		} else {
@@ -75,7 +74,7 @@ func checkAllegiance(msg string, emblem string) bool {
 	return res
 }
 
-// comparator takes 2 maps and checks for equality with condition being the two maps should have same keys and
+// Comparator takes 2 maps and checks for equality with condition being the two maps should have same keys and
 // values of map1 should be lesser or equal to the map2.
 //TODO: Find better and generic way to handle this.
 func comparator(map1, map2 map[int]int) bool {
@@ -83,20 +82,19 @@ func comparator(map1, map2 map[int]int) bool {
 	if len(map1) != len(map2) {
 		return false
 	}
-	// Compare both maps for keys only
+	// Compare both maps for keys and values (condition: val of m1 <= val of m2); m1 = map1, m2= map2
 	for key, val := range map2 {
-		if _, ok:= map1[key]; ok {
+		if _, ok := map1[key]; ok {
 			if val < map1[key] {
 				return false
 			}
-				
+
 		} else {
 			return false
 		}
 	}
 	return true
 }
-
 
 func getEmblem(kingdomName string) string {
 	switch kingdomName {
