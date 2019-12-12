@@ -3,14 +3,18 @@ package main
 import (
 	"fmt"
 	"geektrust/utility"
+	"os"
 )
-
-const inputFile = "input1.txt"
 
 var messages []string
 
 func main() {
-	// TODO: Make input file to be read from os.Args
+	//var inputFile = "input1.txt"
+	if len(os.Args) <= 1 {
+		fmt.Println("Provide Input File path")
+		return
+	}
+	inputFile := os.Args[1] // Default File path is dropped for user provided path
 	messages := utility.ReadInput(inputFile)
 	kingdomMsgMap := utility.SplitMessages(messages)
 	allies := utility.ProcessMessages(kingdomMsgMap)
