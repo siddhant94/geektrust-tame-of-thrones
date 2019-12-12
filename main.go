@@ -15,6 +15,9 @@ func main() {
 		inputFile = os.Args[1]
 	}
 	var messages = utility.ReadInput(inputFile)
+	if(len(messages) < 1) {
+		return
+	}
 	kingdomMsgMap := utility.SplitMessages(messages)
 	allies := utility.ProcessMessages(kingdomMsgMap)
 	if len(allies) < 3 {
