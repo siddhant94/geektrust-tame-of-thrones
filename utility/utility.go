@@ -76,7 +76,6 @@ func checkAllegiance(msg string, emblem string) bool {
 
 // Comparator takes 2 maps and checks for equality with condition being the two maps should have same keys and
 // values of map1 should be lesser or equal to the map2.
-//TODO: Find better and generic way to handle this.
 func comparator(map1, map2 map[int]int) bool {
 	// Compare both maps for length i.e. no of keys
 	if len(map1) != len(map2) {

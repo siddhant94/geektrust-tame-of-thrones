@@ -9,8 +9,8 @@ import (
 func main() {
 	var inputFile string
 	if len(os.Args) <= 1 {
-		fmt.Println("File Path not provided in arguments. Using default Path : " + inputFile)
 		inputFile = "input1.txt"
+		fmt.Println("File Path not provided in arguments. Using default File : " + inputFile)
 	} else {
 		inputFile = os.Args[1]
 	}
