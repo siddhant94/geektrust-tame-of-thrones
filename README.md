@@ -11,4 +11,4 @@ under Challenges > Backend > Tame of Thrones.
 of **geektrust**
 4. Finally to execute, run `./geektrust <absolute_path_to_input_file>` . If no
 argument is given to the executable it will take default input file path as **input1.txt** .
-5. To run tests, run `go test ./...`
+5. To run tests, run `go test ./... -v`, -v flag for verbose.
