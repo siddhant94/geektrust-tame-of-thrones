@@ -1,6 +1,7 @@
-package utility
+package msgprocess
 
 import (
+	"geektrust/msgprocess/cipher"
 	"reflect"
 	"testing"
 )
@@ -14,7 +15,7 @@ func TestReadInput(t *testing.T) {
 	var expected []string
 	expected = []string{"Hello, this is a test input", "This is scond line in the file with line-break"}
 	inputFilename := "testInput1.txt"
-	result := ReadInput(inputFilename)
+	result := ReadFileInput(inputFilename)
 	if !reflect.DeepEqual(expected, result) { // Reflect only used for testing purpose as bad performance
 		t.Fail()
 		t.Errorf("TestReadInput Arguments %s : FAILED, expected %v but got %v", inputFilename, expected, result)
@@ -61,7 +62,7 @@ func TestDecryptMessage(t *testing.T) {
 	}
 
 	for _, val := range testCases {
-		res := decryptMessage(val.Inp, val.Key)
+		res := cipher.DecryptMessage(val.Inp, val.Key)
 		if res != val.Decoded {
 			t.Fail()
 			t.Errorf("TestDecryptMessage Arguments %v and key %v : FAILED, expected %v but got %v", val.Inp, val.Key, val.Decoded, res)
@@ -69,27 +70,4 @@ func TestDecryptMessage(t *testing.T) {
 			t.Logf("TestDecryptMessage Arguments %v and key %v : PASSED, expected %v and got %v", val.Inp, val.Key, val.Decoded, res)
 		}
 	}
-}
-
-func TestDecipherFunc(t *testing.T) {
-	var testCases = []struct {
-		Input      int
-		CipherKey  int
-		DecodedRes int
-	}{
-		{70, 5, 65},    // (70) F ,key(5) => A, Ascii Val = 65
-		{82, 69, 65},   // (82) R ,key(69) => A, Ascii Val = 65
-		{119, 100, 97}, // w, key(100) => a, Ascii Val = 97
-	}
-
-	for _, val := range testCases {
-		actualRes := decipherFunc(val.Input, val.CipherKey)
-		if val.DecodedRes != actualRes {
-			t.Fail()
-			t.Errorf("TestDecipherFunc Arguments %v and key %v : FAILED, expected %v but got %v", val.Input, val.CipherKey, val.DecodedRes, actualRes)
-		} else {
-			t.Logf("TestCipherFunc Arguments %v and key %v : PASSED, expected %v and got %v", val.Input, val.CipherKey, val.DecodedRes, actualRes)
-		}
-	}
-
 }

@@ -2,28 +2,44 @@ package main
 
 import (
 	"fmt"
-	"geektrust/utility"
+	"geektrust/kingdoms"
+	"geektrust/msgprocess"
 	"os"
 )
 
+var DefaultInputFile string
+func init() {
+	DefaultInputFile = "input1.txt"
+}
+
 func main() {
-	var inputFile string
+	// Create Message sender Kingdom, for the problem in question it is King Shan's
+	senderKingdom := kingdoms.NewKingdom("SPACE", "GORILLA")
+
+	var messageSrc string
 	if len(os.Args) <= 1 {
-		inputFile = "input1.txt"
-		fmt.Println("File Path not provided in arguments. Using default File : " + inputFile)
+		messageSrc = DefaultInputFile
+		fmt.Println("File Path not provided in arguments. Using default File : " + messageSrc)
 	} else {
-		inputFile = os.Args[1]
+		messageSrc = os.Args[1]
 	}
-	var messages = utility.ReadInput(inputFile)
-	if(len(messages) < 1) {
+	var messagesList = msgprocess.ReadFileInput(messageSrc)
+
+	// Check for empty file
+	if(len(messagesList) < 1) {
+		fmt.Println("Input file is empty...terminating")
 		return
 	}
-	kingdomMsgMap := utility.SplitMessages(messages)
-	allies := utility.ProcessMessages(kingdomMsgMap)
+
+	// Parse the Input data into map{Msg Recipient(kingdom) : Message}
+	kingdomToMsgMap := msgprocess.ParseInputData(messagesList)
+
+	// Process the messages to determine allies by checking msg success.
+	allies := msgprocess.ProcessMessages(kingdomToMsgMap)
 	if len(allies) < 3 {
 		fmt.Println("NONE")
 	} else {
-		res := "SPACE "
+		res := senderKingdom.Name + " "
 		for _, val := range allies {
 			res += val + ", "
 		}
