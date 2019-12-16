@@ -1,4 +1,4 @@
-package msgprocess
+package messages
 
 import "strings"
 

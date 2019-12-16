@@ -24,3 +24,24 @@ func TestDecipherFunc(t *testing.T) {
 	}
 
 }
+
+
+func TestDecryptMessage(t *testing.T) {
+	var testCases = []struct {
+		Inp     string
+		Key     int
+		Decoded string
+	}{
+		{"ROZO", 3, "OLWL"},
+	}
+
+	for _, val := range testCases {
+		res := DecryptMessage(val.Inp, val.Key)
+		if res != val.Decoded {
+			t.Fail()
+			t.Errorf("TestDecryptMessage Arguments %v and key %v : FAILED, expected %v but got %v", val.Inp, val.Key, val.Decoded, res)
+		} else {
+			t.Logf("TestDecryptMessage Arguments %v and key %v : PASSED, expected %v and got %v", val.Inp, val.Key, val.Decoded, res)
+		}
+	}
+}

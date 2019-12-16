@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"geektrust/kingdoms"
-	"geektrust/msgprocess"
+	"geektrust/messages"
 	"os"
 )
 
@@ -23,7 +23,7 @@ func main() {
 	} else {
 		messageSrc = os.Args[1]
 	}
-	var messagesList = msgprocess.ReadFileInput(messageSrc)
+	var messagesList = messages.ReadFileInput(messageSrc)
 
 	// Check for empty file
 	if(len(messagesList) < 1) {
@@ -32,10 +32,10 @@ func main() {
 	}
 
 	// Parse the Input data into map{Msg Recipient(kingdom) : Message}
-	kingdomToMsgMap := msgprocess.ParseInputData(messagesList)
+	kingdomToMsgMap := messages.ParseInputData(messagesList)
 
 	// Process the messages to determine allies by checking msg success.
-	allies := msgprocess.ProcessMessages(kingdomToMsgMap)
+	allies := messages.ProcessMessages(kingdomToMsgMap)
 	if len(allies) < 3 {
 		fmt.Println("NONE")
 	} else {

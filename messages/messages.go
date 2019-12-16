@@ -1,10 +1,10 @@
-package msgprocess
+package messages
 
 import (
 	"bufio"
 	"fmt"
 	"geektrust/kingdoms"
-	"geektrust/msgprocess/cipher"
+	"geektrust/messages/cipher"
 	"os"
 	"strings"
 )
